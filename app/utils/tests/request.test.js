@@ -2,79 +2,79 @@
  * Test the request function
  */
 
-import request from '../request';
+import request from '../request'
 
 describe('request', () => {
   // Before each test, stub the fetch function
   beforeEach(() => {
-    window.fetch = jest.fn();
-  });
+    window.fetch = jest.fn()
+  })
 
   describe('stubbing successful response', () => {
     // Before each test, pretend we got a successful response
     beforeEach(() => {
-      const res = new Response('{"hello":"world"}', {
+      const res = new Response('{"hello":"world"}', { // eslint-disable-line
         status: 200,
         headers: {
-          'Content-type': 'application/json',
-        },
-      });
+          'Content-type': 'application/json'
+        }
+      })
 
-      window.fetch.mockReturnValue(Promise.resolve(res));
-    });
+      window.fetch.mockReturnValue(Promise.resolve(res))
+    })
 
     it('should format the response correctly', (done) => {
       request('/thisurliscorrect')
         .catch(done)
         .then((json) => {
-          expect(json.hello).toBe('world');
-          done();
-        });
-    });
-  });
+          expect(json.hello).toBe('world')
+          done()
+        })
+    })
+  })
 
   describe('stubbing 204 response', () => {
     // Before each test, pretend we got a successful response
     beforeEach(() => {
-      const res = new Response('', {
+      const res = new Response('', { // eslint-disable-line
         status: 204,
-        statusText: 'No Content',
-      });
+        statusText: 'No Content'
+      })
 
-      window.fetch.mockReturnValue(Promise.resolve(res));
-    });
+      window.fetch.mockReturnValue(Promise.resolve(res))
+    })
 
     it('should return null on 204 response', (done) => {
       request('/thisurliscorrect')
         .catch(done)
         .then((json) => {
-          expect(json).toBeNull();
-          done();
-        });
-    });
-  });
+          expect(json).toBeNull()
+          done()
+        })
+    })
+  })
 
   describe('stubbing error response', () => {
     // Before each test, pretend we got an unsuccessful response
     beforeEach(() => {
-      const res = new Response('', {
+      const res = new Response('', { // eslint-disable-line
         status: 404,
         statusText: 'Not Found',
         headers: {
-          'Content-type': 'application/json',
-        },
-      });
+          'Content-type': 'application/json'
+        }
+      })
 
-      window.fetch.mockReturnValue(Promise.resolve(res));
-    });
+      window.fetch.mockReturnValue(Promise.resolve(res))
+    })
 
     it('should catch errors', (done) => {
       request('/thisdoesntexist')
         .catch((err) => {
-          expect(err.response.status).toBe(404);
-          expect(err.response.statusText).toBe('Not Found');
-          done();
-        });
-    });
-  });
-});
+          expect(err.response.status).toBe(404)
+          expect(err.response.statusText).toBe('Not Found')
+          done()
+        })
+    })
+  })
+})

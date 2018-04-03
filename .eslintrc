@@ -1,0 +1,41 @@
+{
+  "extends": [
+    "standard",
+    "standard-jsx"
+  ],
+  "parser": "babel-eslint",
+  "globals": {
+    "describe": true,
+    "it": true,
+    "fetch": true,
+    "navigator": true,
+    "__DEV__": true,
+    "__CONFIG__": true,
+    "__APPVERSION__": true,
+    "ReactClass": true,
+    "XMLHttpRequest": true,
+    "FormData": true,
+    "Image": true,
+    "FileReader": true,
+    "Blob": true,
+    "atob": true,
+    "React$Element": true,
+    "mixpanel": true,
+    "Notification": true,
+    "importScripts": true,
+    "self": true,
+    "firebase": true
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  },
+  "rules": {
+    "import/first": "off",
+    "import/export": "off"
+  },
+  "env": {
+    "jest": true
+  }
+}
