@@ -5,51 +5,74 @@ export const BOX_SIZE_WIDTH = 3
 export const NUMBER_OF_ELEMENTS_ON_BOARD = NUMBER_OF_COLUMNS * NUMBER_OF_ROWS
 
 export function createSudokoBoard () {
-  let board = [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+  let board = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ]
   for (let i = 0; i < NUMBER_OF_ROWS; i++) {
     let values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     values = Shuffle(values)
     let backtrackCounter = 0
-    for (let j = 0; j < NUMBER_OF_ROWS; j++) {
-      let value = values[0]
-      let counter = 0
-      while (!isValidMove(board, i, j, value)) {
-        counter++
-        if (counter % NUMBER_OF_ROWS === 0) {
+    for (let j = 0; j < NUMBER_OF_COLUMNS; j++) {
+      for (let index = 0; index < values.length; index++) {
+        let value = values[index]
+        if (isValidMove(board, i, j, value)) {
+          board[i][j] = value
+          values = values.filter((v) => v !== value)
+          break
+        } else if (NUMBER_OF_COLUMNS - j <= 3 >= values.length) {
           backtrackCounter++
-          backtrackCounter = j === 0 ? backtrackCounter : backtrackCounter % j
           let initialIndex = j
-          if (j === 0) {
-            values = shiftArrayRight(values)
-            value = values[0]
-          } else {
-            for (let backtrack = 1; backtrack <= backtrackCounter; backtrack++) {
-              j = initialIndex - backtrack
-              values.unshift(board[i][j])
-              board[i][j] = 0
-            }
+          let backtrack
+          for (backtrack = 1; initialIndex - backtrack >= 0 && backtrack <= backtrackCounter; backtrack++) {
+            j = initialIndex - backtrack
+            values = values.concat(board[i][j])
+            board[i][j] = 0
           }
+          j = initialIndex - backtrackCounter > 0 ? initialIndex - backtrackCounter - 1 : -1
+          if (backtrackCounter >= NUMBER_OF_COLUMNS - 1) {
+            backtrackCounter = 0
+            i = i - 1
+            for (let l = 0; l < NUMBER_OF_COLUMNS; l++) {
+              board[i][l] = 0
+            }
+            values = Shuffle(values)
+          }
+          break
+        } else if (index === values.length - 1) {
+          backtrackCounter++
+          let initialIndex = j
+          let backtrack
+          for (backtrack = 1; initialIndex - backtrack >= 0 && backtrack <= backtrackCounter; backtrack++) {
+            j = initialIndex - backtrack
+            values = values.concat(board[i][j])
+            board[i][j] = 0
+          }
+          j = initialIndex - backtrackCounter > 0 ? initialIndex - backtrackCounter - 1 : -1
+          if (backtrackCounter >= NUMBER_OF_COLUMNS - 1) {
+            backtrackCounter = 0
+            i = i - 1
+            for (let l = 0; l < NUMBER_OF_COLUMNS; l++) {
+              board[i][l] = 0
+            }
+            values = Shuffle(values)
+          }
+          break
         }
-        values = shiftArrayRight(values)
-        value = values[0]
       }
-      board[i][j] = value
-      values = values.filter((v) => v !== value)
     }
   }
   printBoard(board)
   return board
 }
 
-function shiftArrayRight (arr1) {
-  let arr = arr1.slice()
-  for (let i = arr.length - 1; i > 0; i--) {
-    let temp = arr[i]
-    arr[i] = arr[i - 1]
-    arr[i - 1] = temp
-  }
-  return arr
-}
 function printBoard (board) {
   let str = ''
   for (let i = 0; i < NUMBER_OF_ROWS; i++) {
