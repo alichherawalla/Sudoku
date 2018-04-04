@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js start
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run standard --fix
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
@@ -215,7 +215,7 @@ npm manifest:
       "eslint-config-standard": "^11.0.0",
       "eslint-import-resolver-webpack": "0.8.3",
       "eslint-plugin-import": "^2.9.0",
-      "eslint-plugin-node": "^6.0.0",
+      "eslint-plugin-node": "^6.0.1",
       "eslint-plugin-promise": "^3.6.0",
       "eslint-plugin-react": "^7.7.0",
       "eslint-plugin-standard": "^3.0.1",
@@ -8825,7 +8825,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c cross-env NODE_ENV=development node server
+  Arguments: -c /Users/mac/sudoku/node_modules/.bin/standard --fix
   Directory: /Users/mac/sudoku
   Output:
   

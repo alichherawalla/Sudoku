@@ -3,19 +3,35 @@ export const NUMBER_OF_COLUMNS = 9
 export const BOX_SIZE_HEIGHT = 3
 export const BOX_SIZE_WIDTH = 3
 export const NUMBER_OF_ELEMENTS_ON_BOARD = NUMBER_OF_COLUMNS * NUMBER_OF_ROWS
-
+export const DIFFICULTY_EASY = 25
+export const DIFFICULTY_MEDIUM = 20
+export const DIFFICULTY_TOUGH = 15
+export const TYPE_GENERATED = 1
+export const TYPE_USER = 1
+const EMPTY_BOARD = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]
+]
+const EMPTY_USER_BOARD = [
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
+]
 export function createSudokoBoard () {
-  let board = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  ]
+  let board = EMPTY_BOARD.map((boardRow) => boardRow.slice())
   for (let i = 0; i < NUMBER_OF_ROWS; i++) {
     let values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     values = Shuffle(values)
@@ -36,7 +52,7 @@ export function createSudokoBoard () {
             values = values.concat(board[i][j])
             board[i][j] = 0
           }
-          j = initialIndex - backtrackCounter > 0 ? initialIndex - backtrackCounter - 1 : -1
+          j = initialIndex - backtrack
           if (backtrackCounter >= NUMBER_OF_COLUMNS - 1) {
             backtrackCounter = 0
             i = i - 1
@@ -55,7 +71,7 @@ export function createSudokoBoard () {
             values = values.concat(board[i][j])
             board[i][j] = 0
           }
-          j = initialIndex - backtrackCounter > 0 ? initialIndex - backtrackCounter - 1 : -1
+          j = initialIndex - backtrack
           if (backtrackCounter >= NUMBER_OF_COLUMNS - 1) {
             backtrackCounter = 0
             i = i - 1
@@ -69,20 +85,19 @@ export function createSudokoBoard () {
       }
     }
   }
-  printBoard(board)
   return board
 }
 
-function printBoard (board) {
-  let str = ''
-  for (let i = 0; i < NUMBER_OF_ROWS; i++) {
-    for (let j = 0; j < NUMBER_OF_COLUMNS; j++) {
-      str = str + '\t'
-    }
-    str = str + '\n'
+export function getGameBoard (solution, difficulty = DIFFICULTY_EASY) {
+  let board = EMPTY_USER_BOARD.map((boardRow) => boardRow.slice())
+  for (let i = 0; i < difficulty; i++) {
+    let x = Math.floor(Math.random() * 9)
+    let y = Math.floor(Math.random() * 9)
+    board[x][y] = {value: solution[x][y], type: TYPE_GENERATED}
   }
-  console.log(str)
+  return board
 }
+
 function Shuffle (array) {
   var currentIndex = array.length
   let temporaryValue
