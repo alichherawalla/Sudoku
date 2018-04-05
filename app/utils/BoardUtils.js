@@ -6,8 +6,8 @@ export const NUMBER_OF_ELEMENTS_ON_BOARD = NUMBER_OF_COLUMNS * NUMBER_OF_ROWS
 export const DIFFICULTY_EASY = 25
 export const DIFFICULTY_MEDIUM = 20
 export const DIFFICULTY_TOUGH = 15
+export const TYPE_USER = 0
 export const TYPE_GENERATED = 1
-export const TYPE_USER = 1
 const EMPTY_BOARD = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],

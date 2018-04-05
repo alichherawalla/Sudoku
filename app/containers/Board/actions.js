@@ -4,7 +4,7 @@
  *
  */
 
-import { UPDATE_GAME, NEW_GAME } from './constants'
+import { UPDATE_BOARD, UPDATE_GAME, NEW_GAME } from './constants'
 
 export function updateGame (game) {
   return {
@@ -12,7 +12,13 @@ export function updateGame (game) {
     game: game
   }
 }
-export function requestNewGame (game) {
+export function updateBoard (board) {
+  return {
+    type: UPDATE_BOARD,
+    board
+  }
+}
+export function requestNewGame () {
   return {
     type: NEW_GAME
   }
