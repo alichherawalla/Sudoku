@@ -11,6 +11,7 @@ import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import styled from 'styled-components'
 import ReactDOM from 'react-dom'
+import { toast, ToastContainer } from 'react-toastify'
 import injectReducer from 'utils/injectReducer'
 import makeSelectGame from './selectors'
 import reducer from './reducer'
@@ -56,6 +57,9 @@ width: 100%;
 `
 let clickedBoardItem
 export class Board extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  state = {
+    showIntroToast: true
+  }
   componentDidMount () {
     window.addEventListener('keydown', this.handleKeyPress)
   }
@@ -123,10 +127,13 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
           board[clickedBoardItem.row][clickedBoardItem.column] = {type: TYPE_USER, value: value}
           this.props.updateGame(board)
           if (isGameOver(boardArray)) {
-            alert('game over') // eslint-disable-line
+            this.showSuccessToast('You win')
           }
+        } else {
+          this.showErrorToast('Invalid move')
         }
       } catch (err) {
+        console.log(err)
       }
     } else if (clickedBoardItem && evt.keyCode >= 37 && evt.keyCode <= 40) {
       let row = clickedBoardItem.row
@@ -165,17 +172,40 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
           }
           break
       }
-      // this.handleBoardElementClick(ReactDOM.findDOMNode(this.refs[row + '' + column]), row, column)
-    } else {
-      // do something here
     }
   }
   handleDifficultyChange = (value, evt) => {
     this.props.requestNewGame({prefilledSpots: value, difficulty: evt.props.children})
   }
+
+  showErrorToast (errorMessage) {
+    toast.success(errorMessage, {
+      position: toast.POSITION.TOP_RIGHT
+    })
+  }
+
+  showSuccessToast (successMessage) {
+    toast.error(successMessage, {
+      position: toast.POSITION.TOP_CENTER
+    })
+  }
+  showInfoToast (infoMessage) {
+    toast.info(infoMessage, {
+      position: toast.POSITION.TOP_CENTER
+    })
+  }
+
+  updateShowIntroState = () => {
+    this.setState({showIntroToast: !this.state.showIntroToast})
+  }
   render () {
+    if (this.state.showIntroToast) {
+      this.showInfoToast('Click a board element and enter a number to begin playing')
+      this.updateShowIntroState()
+    }
     return (
       <BoardWrapper>
+        <ToastContainer hideProgressBar autoClose={3000} />
         <ParentToLeftRightAligned>
           <LeftAlignedChild><H1>Sudoku</H1></LeftAlignedChild>
           <RightAlignedChild style={{marginTop: '2%'}}>
