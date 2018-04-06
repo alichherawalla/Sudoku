@@ -92,7 +92,7 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
     var element = document.createElement('a')
     let str = '[\n'
     for (let i = 0; i < NUMBER_OF_ROWS; i++) {
-      str += ' [' + this.props.game.board[i] + ']\n'
+      str += ' [' + this.props.game.solution[i] + ']\n'
     }
     str += ']'
     var file = new Blob([str], {type: 'text/plain'}) //eslint-disable-line
