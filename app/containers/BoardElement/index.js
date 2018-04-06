@@ -18,6 +18,8 @@ width: 40px;
 height: 40px;
 text-align: center;
 padding: 5px;
+line-height: 30px;
+font-size: 15px;
 `
 const FilledBoardElementDiv = styled(EmptyBoardElementDiv)`
 background-color: ${Colors.FilledBoardElementbackgroundColor};

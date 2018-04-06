@@ -43,6 +43,7 @@ const Option = Select.Option
 const BoardContainer = styled.div`
 background-color: ${Colors.BoardBackgroundColor};
 border: 2px solid black;
+border-radius: 5px;
 `
 const BoardWrapper = styled.div`
 height: 100%;
