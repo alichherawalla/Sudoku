@@ -3,9 +3,9 @@ export const NUMBER_OF_COLUMNS = 9
 export const BOX_SIZE_HEIGHT = 3
 export const BOX_SIZE_WIDTH = 3
 export const NUMBER_OF_ELEMENTS_ON_BOARD = NUMBER_OF_COLUMNS * NUMBER_OF_ROWS
-export const DIFFICULTY_EASY = 25
-export const DIFFICULTY_MEDIUM = 20
-export const DIFFICULTY_TOUGH = 15
+export const DIFFICULTY_EASY = {prefilledSpots: 30, difficulty: 'Easy'}
+export const DIFFICULTY_NORMAL = {prefilledSpots: 20, difficulty: 'Normal'}
+export const DIFFICULTY_HARD = {prefilledSpots: 10, difficulty: 'Tough'}
 export const TYPE_USER = 0
 export const TYPE_GENERATED = 1
 const EMPTY_BOARD = [
@@ -30,6 +30,12 @@ const EMPTY_USER_BOARD = [
   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
   [{}, {}, {}, {}, {}, {}, {}, {}, {}]
 ]
+export const DIFFICULTY_LEVELS = [
+  DIFFICULTY_EASY,
+  DIFFICULTY_NORMAL,
+  DIFFICULTY_HARD
+]
+
 export function createSudokoBoard () {
   let board = EMPTY_BOARD.map((boardRow) => boardRow.slice())
   for (let i = 0; i < NUMBER_OF_ROWS; i++) {
@@ -90,7 +96,7 @@ export function createSudokoBoard () {
 
 export function getGameBoard (solution, difficulty = DIFFICULTY_EASY) {
   let board = EMPTY_USER_BOARD.map((boardRow) => boardRow.slice())
-  for (let i = 0; i < difficulty; i++) {
+  for (let i = 0; i < difficulty.prefilledSpots; i++) {
     let x = Math.floor(Math.random() * 9)
     let y = Math.floor(Math.random() * 9)
     board[x][y] = {value: solution[x][y], type: TYPE_GENERATED}

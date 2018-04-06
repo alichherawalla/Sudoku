@@ -18,8 +18,9 @@ export function updateBoard (board) {
     board
   }
 }
-export function requestNewGame () {
+export function requestNewGame (difficulty) {
   return {
-    type: NEW_GAME
+    type: NEW_GAME,
+    difficulty
   }
 }

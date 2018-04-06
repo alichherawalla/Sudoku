@@ -18,13 +18,26 @@ import Colors from '../../color'
 import HorizontallyAlignedComponent from '../../components/HorizontallyAlignedComponent/'
 import BoardElement from '../BoardElement'
 import LeftAlignedChild from '../../components/LeftAlignedChild'
+import RightAlignedChild from '../../components/RightAlignedChild'
 import CenteredSection from '../App/CenteredSection'
 import ParentToLeftRightAligned from '../../components/ParentToLeftRightAligned'
 import H1 from '../../components/H1'
-import { TYPE_GENERATED, BOX_SIZE_HEIGHT, BOX_SIZE_WIDTH, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, TYPE_USER, isValidMove, isGameOver } from '../../utils/BoardUtils'
+import {
+  DIFFICULTY_LEVELS,
+  TYPE_GENERATED,
+  BOX_SIZE_HEIGHT,
+  BOX_SIZE_WIDTH,
+  NUMBER_OF_ROWS,
+  NUMBER_OF_COLUMNS,
+  TYPE_USER,
+  isValidMove,
+  isGameOver
+} from '../../utils/BoardUtils'
 import { updateBoard, requestNewGame } from './actions'
 import { KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN } from '../../utils/constants'
+import { Select } from 'antd'
 
+const Option = Select.Option
 const BoardContainer = styled.div`
 background-color: ${Colors.BoardBackgroundColor};
 border: 2px solid black;
@@ -157,11 +170,22 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
       // do something here
     }
   }
+  handleDifficultyChange = (value, evt) => {
+    this.props.requestNewGame({prefilledSpots: value, difficulty: evt.props.children})
+  }
   render () {
     return (
       <BoardWrapper>
         <ParentToLeftRightAligned>
           <LeftAlignedChild><H1>Sudoku</H1></LeftAlignedChild>
+          <RightAlignedChild style={{marginTop: '2%'}}>
+            <Select
+              defaultValue={this.props.game.difficulty.difficulty}
+              value={this.props.game.difficulty.difficulty}
+              onChange={this.handleDifficultyChange}>
+              {DIFFICULTY_LEVELS.map((difficulty, index) => <Option key={index} value={difficulty.prefilledSpots}>{difficulty.difficulty}</Option>)}
+            </Select>
+          </RightAlignedChild>
         </ParentToLeftRightAligned>
         <BoardContainer>
           {
@@ -207,8 +231,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
-    requestNewGame: () => {
-      dispatch(requestNewGame())
+    requestNewGame: (difficulty) => {
+      dispatch(requestNewGame(difficulty))
     },
     updateGame: (board) => {
       dispatch(updateBoard(board))
