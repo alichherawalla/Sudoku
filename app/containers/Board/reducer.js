@@ -21,7 +21,6 @@ function boardReducer (state = initialState, action) {
     case UPDATE_GAME:
       return state.set('game', action.game)
     case UPDATE_BOARD:
-      console.log(action.board)
       return state.set('board', action.board)
     case NEW_GAME:
       let solution = createSudokoBoard()

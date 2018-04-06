@@ -21,7 +21,7 @@ import LeftAlignedChild from '../../components/LeftAlignedChild'
 import CenteredSection from '../App/CenteredSection'
 import ParentToLeftRightAligned from '../../components/ParentToLeftRightAligned'
 import H1 from '../../components/H1'
-import { TYPE_GENERATED, BOX_SIZE_HEIGHT, BOX_SIZE_WIDTH, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, TYPE_USER, isValidMove } from '../../utils/BoardUtils'
+import { TYPE_GENERATED, BOX_SIZE_HEIGHT, BOX_SIZE_WIDTH, NUMBER_OF_ROWS, NUMBER_OF_COLUMNS, TYPE_USER, isValidMove, isGameOver } from '../../utils/BoardUtils'
 import { updateBoard, requestNewGame } from './actions'
 import { KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN } from '../../utils/constants'
 
@@ -109,10 +109,11 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
         if (isValidMove(boardArray, clickedBoardItem.row, clickedBoardItem.column, value)) {
           board[clickedBoardItem.row][clickedBoardItem.column] = {type: TYPE_USER, value: value}
           this.props.updateGame(board)
+          if (isGameOver(boardArray)) {
+            alert('game over') // eslint-disable-line
+          }
         }
       } catch (err) {
-        console.log(err)
-        console.log(evt)
       }
     } else if (clickedBoardItem && evt.keyCode >= 37 && evt.keyCode <= 40) {
       let row = clickedBoardItem.row

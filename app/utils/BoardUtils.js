@@ -113,7 +113,7 @@ function Shuffle (array) {
 }
 
 export function isValidMove (board, row, column, value) {
-  return isValidBox(board, row, column, value) && isValidRow(board, row, value) && isValidColumn(board, column, value)
+  return isValidBox(board, row, column, value) && isValidRow(board, row, column, value) && isValidColumn(board, row, column, value)
 }
 
 export function isValidBox (board, row, column, value) {
@@ -121,7 +121,7 @@ export function isValidBox (board, row, column, value) {
   let boxColumn = Math.floor(column / BOX_SIZE_HEIGHT) * BOX_SIZE_HEIGHT
   for (let i = boxRow; i < boxRow + BOX_SIZE_WIDTH; i++) {
     for (let j = boxColumn; j < boxColumn + BOX_SIZE_HEIGHT; j++) {
-      if (board[i][j] === value) {
+      if (board[i][j] === value && row !== i && column !== j) {
         return false
       }
     }
@@ -129,18 +129,29 @@ export function isValidBox (board, row, column, value) {
   return true
 }
 
-export function isValidRow (board, row, value) {
+export function isGameOver (board) {
   for (let i = 0; i < NUMBER_OF_ROWS; i++) {
-    if (board[row][i] === value) {
+    for (let j = 0; j < NUMBER_OF_COLUMNS; j++) {
+      if (!board[i][j] || board[i][j] <= 0) {
+        return false
+      }
+    }
+  }
+  return true
+}
+
+export function isValidRow (board, row, column, value) {
+  for (let i = 0; i < NUMBER_OF_ROWS; i++) {
+    if (board[row][i] === value && i !== column) {
       return false
     }
   }
   return true
 }
 
-export function isValidColumn (board, column, value) {
+export function isValidColumn (board, row, column, value) {
   for (let i = 0; i < NUMBER_OF_ROWS; i++) {
-    if (board[i][column] === value) {
+    if (board[i][column] === value && i !== row) {
       return false
     }
   }
