@@ -11,15 +11,9 @@ import { compose } from 'redux'
 import { TYPE_GENERATED } from '../../utils/BoardUtils'
 import styled from 'styled-components'
 import Colors from '../../color'
-const EmptyBoardElementDiv = styled.div`
+import BoardElementComponent from '../../components/BoardElementComponent'
+const EmptyBoardElementDiv = styled(BoardElementComponent)`
 background-color: ${Colors.EmptyBoardElementbackgroundColor};
-color: white;
-width: 40px;
-height: 40px;
-text-align: center;
-padding: 5px;
-line-height: 30px;
-font-size: 15px;
 `
 const FilledBoardElementDiv = styled(EmptyBoardElementDiv)`
 background-color: ${Colors.FilledBoardElementbackgroundColor};

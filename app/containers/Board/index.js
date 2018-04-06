@@ -24,6 +24,7 @@ import RightAlignedChild from '../../components/RightAlignedChild'
 import CenteredSection from '../App/CenteredSection'
 import ParentToLeftRightAligned from '../../components/ParentToLeftRightAligned'
 import H1 from '../../components/H1'
+import BoardElementComponent from '../../components/BoardElementComponent'
 import {
   DIFFICULTY_LEVELS,
   TYPE_GENERATED,
@@ -52,6 +53,10 @@ width: 100%;
 const PaddedHorizontallyAlignedComponent = styled(HorizontallyAlignedComponent)`
 padding: 5px;
 `
+const NumberListElement = styled(BoardElementComponent)`
+background-color: ${Colors.FilledBoardElementbackgroundColor};
+border: 1px solid #a9a9a9;`
+
 const PerformaceContainer = styled(ParentToLeftRightAligned)`
 color: rgba(0, 0, 0, 0.65)
 `
@@ -121,6 +126,7 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
     this.props.resetBoard()
   }
   handleKeyPress = (evt) => {
+    console.log(evt)
     let boardArray = this.props.game.board.map((boardRow) => boardRow.slice().map((element) => element.value ? element.value : 0))
     let board = this.props.game.board.map((boardRow) => boardRow.slice())
     if (clickedBoardItem && evt.keyCode >= 49 && evt.keyCode <= 57) {
@@ -255,6 +261,12 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
             <Button disabled={this.props.game.isGameOver} onClick={this.handleResetClick}>Reset</Button>
           </CenteredSection>
         </PaddedHorizontallyAlignedComponent>
+        <HorizontallyAlignedComponent>
+          <CenteredSection>
+            {Array.apply(null, {length: 9}).map(Number.call, Number).map((element, index) => <NumberListElement
+              onClick={(evt) => this.handleKeyPress({key: element + 1, keyCode: 49 + element})}>{element + 1}</NumberListElement>)}
+          </CenteredSection>
+        </HorizontallyAlignedComponent>
       </BoardWrapper>
     )
   }
