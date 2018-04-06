@@ -13,7 +13,7 @@ const initialState = fromJS({
   solution,
   board,
   initialBoard: board,
-  numberOfGames: 0,
+  numberOfGames: 1,
   gamesWon: 0,
   difficulty: DIFFICULTY_EASY,
   isGameOver: false

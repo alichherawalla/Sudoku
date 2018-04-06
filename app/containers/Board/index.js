@@ -51,7 +51,9 @@ width: 100%;
 const PaddedHorizontallyAlignedComponent = styled(HorizontallyAlignedComponent)`
 padding: 5px;
 `
-
+const PerformaceContainer = styled(ParentToLeftRightAligned)`
+color: rgba(0, 0, 0, 0.65)
+`
 let clickedBoardItem
 export class Board extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
@@ -218,6 +220,12 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
             </Select>
           </RightAlignedChild>
         </ParentToLeftRightAligned>
+        <PerformaceContainer>
+          <LeftAlignedChild>
+            <div>Total games: {this.props.game.numberOfGames}</div>
+            <div>Games won: {this.props.game.gamesWon}</div>
+          </LeftAlignedChild>
+        </PerformaceContainer>
         <BoardContainer>
           {
             this.props.game.board.map((row, rowIndex) => {
