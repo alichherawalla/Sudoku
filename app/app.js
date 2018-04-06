@@ -42,6 +42,7 @@ import 'file-loader?name=[name].[ext]!./.htaccess' // eslint-disable-line import
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './configureStore'
+import { loadState, saveState } from './LocalStorage'
 
 // Import i18n messages
 import { translationMessages } from './i18n'
@@ -61,9 +62,12 @@ openSansObserver.load().then(() => {
 })
 
 // Create redux store with history
-const initialState = {}
+const persistedStore = loadState()
 const history = createHistory()
-const store = configureStore(initialState, history)
+const store = configureStore(persistedStore, history)
+store.subscribe(() => {
+  saveState(store.getState())
+})
 const MOUNT_NODE = document.getElementById('app')
 
 const render = (messages) => {
