@@ -11,6 +11,7 @@ import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import styled from 'styled-components'
 import ReactDOM from 'react-dom'
+import { Select } from 'antd'
 import { toast, ToastContainer } from 'react-toastify'
 import injectReducer from 'utils/injectReducer'
 import makeSelectGame from './selectors'
@@ -36,7 +37,7 @@ import {
 } from '../../utils/BoardUtils'
 import { resetBoard, updateBoard, requestNewGame, updateCleanBoard } from './actions'
 import { KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN } from '../../utils/constants'
-import { Select, Button } from 'antd'
+import Button from '../../components/CustomButton'
 
 const Option = Select.Option
 const BoardContainer = styled.div`
@@ -47,6 +48,10 @@ const BoardWrapper = styled.div`
 height: 100%;
 width: 100%;
 `
+const PaddedHorizontallyAlignedComponent = styled(HorizontallyAlignedComponent)`
+padding: 5px;
+`
+
 let clickedBoardItem
 export class Board extends React.Component { // eslint-disable-line react/prefer-stateless-function
   state = {
@@ -234,13 +239,13 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
             })
           }
         </BoardContainer>
-        <HorizontallyAlignedComponent>
+        <PaddedHorizontallyAlignedComponent>
           <CenteredSection>
             <Button onClick={() => this.props.requestNewGame(this.props.game.difficulty)}>New Game</Button>
-            <Button disabled={this.props.game.isGameOver} onClick={this.downloadSolution}>Download solution</Button>
+            <Button disabled={this.props.game.isGameOver} onClick={this.downloadSolution}>Solution</Button>
             <Button disabled={this.props.game.isGameOver} onClick={this.handleResetClick}>Reset</Button>
           </CenteredSection>
-        </HorizontallyAlignedComponent>
+        </PaddedHorizontallyAlignedComponent>
       </BoardWrapper>
     )
   }

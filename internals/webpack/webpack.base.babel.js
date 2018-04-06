@@ -4,7 +4,9 @@
 
 const path = require('path')
 const webpack = require('webpack')
-
+const fs = require('fs')
+const lessToJs = require('less-vars-to-js')
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, '../../theme.less'), 'utf8'))
 // Remove this line once the following warning goes away (it was meant for webpack loader authors not users):
 // 'DeprecationWarning: loaderUtils.parseQuery() received a non-string value which can be problematic,
 // see https://github.com/webpack/loader-utils/issues/56 parseQuery() will be replaced with getOptions()
@@ -48,7 +50,8 @@ module.exports = (options) => ({
           { loader: 'css-loader' },
           { loader: 'less-loader',
             options: {
-              javascriptEnabled: true
+              javascriptEnabled: true,
+              modifyVars: themeVariables
             }
           }
         ]
