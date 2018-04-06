@@ -94,6 +94,17 @@ export function createSudokoBoard () {
   return board
 }
 
+export function getFinishedBoard (board) {
+  let finished = EMPTY_USER_BOARD.map((boardRow) => boardRow.slice())
+  for (let i = 0; i < NUMBER_OF_ROWS; i++) {
+    for (let j = 0; j < NUMBER_OF_COLUMNS; j++) {
+      finished[i][j] = {value: board[i][j].value, type: TYPE_GENERATED}
+    }
+  }
+  console.log(finished)
+  return finished
+}
+
 export function getGameBoard (solution, difficulty = DIFFICULTY_EASY) {
   let board = EMPTY_USER_BOARD.map((boardRow) => boardRow.slice())
   for (let i = 0; i < difficulty.prefilledSpots; i++) {

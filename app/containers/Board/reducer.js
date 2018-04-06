@@ -5,16 +5,18 @@
  */
 
 import { fromJS } from 'immutable'
-import { UPDATE_BOARD, UPDATE_GAME, NEW_GAME } from './constants'
-import { createSudokoBoard, getGameBoard, DIFFICULTY_EASY } from '../../utils/BoardUtils'
+import { RESET_BOARD, UPDATE_CLEAN_BOARD, UPDATE_BOARD, UPDATE_GAME, NEW_GAME } from './constants'
+import { getFinishedBoard, createSudokoBoard, getGameBoard, DIFFICULTY_EASY } from '../../utils/BoardUtils'
 let solution = createSudokoBoard()
 let board = getGameBoard(solution)
 const initialState = fromJS({
   solution,
   board,
-  score: 0,
-  best: 0,
-  difficulty: DIFFICULTY_EASY
+  initialBoard: board,
+  numberOfGames: 0,
+  gamesWon: 0,
+  difficulty: DIFFICULTY_EASY,
+  isGameOver: false
 })
 
 function boardReducer (state = initialState, action) {
@@ -29,10 +31,25 @@ function boardReducer (state = initialState, action) {
       return fromJS({
         solution,
         board,
-        score: 0,
-        best: 0,
-        difficulty: action.difficulty
+        initialBoard: board,
+        gamesWon: state.get('gamesWon'),
+        numberOfGames: state.get('numberOfGames') + 1,
+        difficulty: action.difficulty,
+        isGameOver: false
       })
+    case UPDATE_CLEAN_BOARD:
+      board = getFinishedBoard(state.get('board'))
+      return fromJS({
+        solution,
+        board,
+        initialBoard: board,
+        gamesWon: state.get('gamesWon') + 1,
+        numberOfGames: state.get('numberOfGames'),
+        difficulty: state.get('difficulty'),
+        isGameOver: true
+      })
+    case RESET_BOARD:
+      return state.set('board', state.get('initialBoard'))
     default:
       return state
   }

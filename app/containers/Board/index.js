@@ -34,23 +34,15 @@ import {
   isValidMove,
   isGameOver
 } from '../../utils/BoardUtils'
-import { updateBoard, requestNewGame } from './actions'
+import { resetBoard, updateBoard, requestNewGame, updateCleanBoard } from './actions'
 import { KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN } from '../../utils/constants'
-import { Select } from 'antd'
+import { Select, Button } from 'antd'
 
 const Option = Select.Option
 const BoardContainer = styled.div`
 background-color: ${Colors.BoardBackgroundColor};
 border: 2px solid black;
 `
-
-const Button = styled.div`
-margin: 5px;
-padding: 5px;
-cursor: pointer;
-color : #4592E6;
-`
-
 const BoardWrapper = styled.div`
 height: 100%;
 width: 100%;
@@ -117,6 +109,9 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
     element.download = 'sudoku_solution.txt'
     element.click()
   }
+  handleResetClick = () => {
+    this.props.resetBoard()
+  }
   handleKeyPress = (evt) => {
     let boardArray = this.props.game.board.map((boardRow) => boardRow.slice().map((element) => element.value ? element.value : 0))
     let board = this.props.game.board.map((boardRow) => boardRow.slice())
@@ -125,15 +120,16 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
         let value = parseInt(evt.key)
         if (isValidMove(boardArray, clickedBoardItem.row, clickedBoardItem.column, value)) {
           board[clickedBoardItem.row][clickedBoardItem.column] = {type: TYPE_USER, value: value}
-          this.props.updateGame(board)
+          boardArray[clickedBoardItem.row][clickedBoardItem.column] = value
+          this.props.updateBoard(board)
           if (isGameOver(boardArray)) {
             this.showSuccessToast('You win')
+            this.props.updateCleanBoard()
           }
         } else {
           this.showErrorToast('Invalid move')
         }
       } catch (err) {
-        console.log(err)
       }
     } else if (clickedBoardItem && evt.keyCode >= 37 && evt.keyCode <= 40) {
       let row = clickedBoardItem.row
@@ -179,13 +175,13 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
   }
 
   showErrorToast (errorMessage) {
-    toast.success(errorMessage, {
+    toast.error(errorMessage, {
       position: toast.POSITION.TOP_RIGHT
     })
   }
 
   showSuccessToast (successMessage) {
-    toast.error(successMessage, {
+    toast.success(successMessage, {
       position: toast.POSITION.TOP_CENTER
     })
   }
@@ -240,9 +236,9 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
         </BoardContainer>
         <HorizontallyAlignedComponent>
           <CenteredSection>
-            <Button onClick={this.props.requestNewGame}>New Game</Button>
-            <Button onClick={this.downloadSolution}>Download solution</Button>
-            <Button>Reset</Button>
+            <Button onClick={() => this.props.requestNewGame(this.props.game.difficulty)}>New Game</Button>
+            <Button disabled={this.props.game.isGameOver} onClick={this.downloadSolution}>Download solution</Button>
+            <Button disabled={this.props.game.isGameOver} onClick={this.handleResetClick}>Reset</Button>
           </CenteredSection>
         </HorizontallyAlignedComponent>
       </BoardWrapper>
@@ -259,13 +255,19 @@ const mapStateToProps = createStructuredSelector({
   game: makeSelectGame()
 })
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (dispatch, ownProps) {
   return {
     requestNewGame: (difficulty) => {
       dispatch(requestNewGame(difficulty))
     },
-    updateGame: (board) => {
+    updateBoard: (board) => {
       dispatch(updateBoard(board))
+    },
+    updateCleanBoard: () => {
+      dispatch(updateCleanBoard())
+    },
+    resetBoard: () => {
+      dispatch(resetBoard())
     },
     dispatch
   }
