@@ -34,7 +34,8 @@ import {
   NUMBER_OF_COLUMNS,
   TYPE_USER,
   isValidMove,
-  isGameOver
+  isGameOver,
+  getNearestUserBoardElement
 } from '../../utils/BoardUtils'
 import { dontShowIntroToast, resetBoard, updateBoard, requestNewGame, updateCleanBoard } from './actions'
 import { KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN } from '../../utils/constants'
@@ -56,6 +57,10 @@ padding: 5px;
 const NumberListElement = styled(BoardElementComponent)`
 background-color: ${Colors.FilledBoardElementbackgroundColor};
 border: 1px solid #a9a9a9;`
+
+const DirectionElement = styled(NumberListElement)`
+margin: 5px;
+`
 
 const PerformaceContainer = styled(ParentToLeftRightAligned)`
 color: rgba(0, 0, 0, 0.65)
@@ -178,6 +183,12 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
           }
           break
       }
+    } else if (!clickedBoardItem) {
+      console.log('check check')
+      let boardElement = getNearestUserBoardElement(board)
+      if (boardElement) {
+        this.handleBoardElementClick(ReactDOM.findDOMNode(this.refs[boardElement.row + '' + boardElement.column]), boardElement.row, boardElement.column)
+      }
     }
   }
   handleDifficultyChange = (value, evt) => {
@@ -266,6 +277,18 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
               onClick={(evt) => this.handleKeyPress({key: element + 1, keyCode: 49 + element})}>{element + 1}</NumberListElement>)}
           </CenteredSection>
         </HorizontallyAlignedComponent>
+        <center style={{width: '100%', marginTop: '4%'}}>
+          <DirectionElement
+            onClick={(evt) => this.handleKeyPress({keyCode: KEY_UP})}>↑</DirectionElement>
+          <HorizontallyAlignedComponent><CenteredSection>
+            <DirectionElement
+              onClick={(evt) => this.handleKeyPress({keyCode: KEY_LEFT})}>←</DirectionElement>
+            <DirectionElement
+              onClick={(evt) => this.handleKeyPress({keyCode: KEY_DOWN})}>↓</DirectionElement>
+            <DirectionElement
+              onClick={(evt) => this.handleKeyPress({keyCode: KEY_RIGHT})}>→</DirectionElement>
+          </CenteredSection></HorizontallyAlignedComponent>
+        </center>
       </BoardWrapper>
     )
   }

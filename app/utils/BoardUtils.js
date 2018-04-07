@@ -104,6 +104,18 @@ export function getFinishedBoard (board) {
   return finished
 }
 
+export function getNearestUserBoardElement (board) {
+  console.log(board)
+  for (let i = 0; i < NUMBER_OF_ROWS; i++) {
+    for (let j = 0; j < NUMBER_OF_COLUMNS; j++) {
+      if (board[i][j].type !== TYPE_GENERATED) {
+        return {row: i, column: j}
+      }
+    }
+  }
+  return null
+}
+
 export function getGameBoard (solution, difficulty = DIFFICULTY_EASY) {
   let board = EMPTY_USER_BOARD.map((boardRow) => boardRow.slice())
   for (let i = 0; i < difficulty.prefilledSpots; i++) {
