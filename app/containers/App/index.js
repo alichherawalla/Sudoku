@@ -15,7 +15,7 @@ import Board from 'containers/Board/Loadable'
 import NotFoundPage from 'containers/NotFoundPage/Loadable'
 import CenteredSection from './CenteredSection'
 const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
+  max-width: calc(768px);
   margin: 0 auto;
   display: flex;
   vertical-align: middle;

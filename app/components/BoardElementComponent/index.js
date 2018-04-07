@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 export default styled.div`
 color: white;
-width: 40px;
-height: 40px;
+width: 35px;
+height: 35px;
 text-align: center;
 padding: 5px;
 line-height: 30px;

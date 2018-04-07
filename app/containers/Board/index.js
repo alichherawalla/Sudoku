@@ -43,13 +43,17 @@ import Button from '../../components/CustomButton'
 
 const Option = Select.Option
 const BoardContainer = styled.div`
-background-color: ${Colors.BoardBackgroundColor};
 border: 2px solid black;
 border-radius: 5px;
+margin: 0 auto;
+width: 90%;
+margin-top: 4%;
+margin-bottom: 4%;
 `
 const BoardWrapper = styled.div`
 height: 100%;
 width: 100%;
+position: relative;
 `
 const PaddedHorizontallyAlignedComponent = styled(HorizontallyAlignedComponent)`
 padding: 5px;
@@ -271,13 +275,13 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
             <Button disabled={this.props.game.isGameOver} onClick={this.handleResetClick}>Reset</Button>
           </CenteredSection>
         </PaddedHorizontallyAlignedComponent>
-        <HorizontallyAlignedComponent>
+        <HorizontallyAlignedComponent style={{marginTop: '4%'}}>
           <CenteredSection>
             {Array.apply(null, {length: 9}).map(Number.call, Number).map((element, index) => <NumberListElement
               onClick={(evt) => this.handleKeyPress({key: element + 1, keyCode: 49 + element})}>{element + 1}</NumberListElement>)}
           </CenteredSection>
         </HorizontallyAlignedComponent>
-        <center style={{width: '100%', marginTop: '4%'}}>
+        <center style={{width: '100%'}}>
           <DirectionElement
             onClick={(evt) => this.handleKeyPress({keyCode: KEY_UP})}>↑</DirectionElement>
           <HorizontallyAlignedComponent><CenteredSection>
