@@ -4,7 +4,7 @@
  *
  */
 
-import { RESET_BOARD, UPDATE_CLEAN_BOARD, UPDATE_BOARD, UPDATE_GAME, NEW_GAME } from './constants'
+import { DONT_SHOW_INTRO_TOAST, RESET_BOARD, UPDATE_CLEAN_BOARD, UPDATE_BOARD, UPDATE_GAME, NEW_GAME } from './constants'
 
 export function updateGame (game) {
   return {
@@ -32,5 +32,10 @@ export function updateCleanBoard () {
 export function resetBoard () {
   return {
     type: RESET_BOARD
+  }
+}
+export function dontShowIntroToast () {
+  return {
+    type: DONT_SHOW_INTRO_TOAST
   }
 }

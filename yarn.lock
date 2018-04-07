@@ -17,6 +17,10 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+JSON@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/JSON/-/JSON-1.0.0.tgz#8681531c28f8438a075589ff07248246ea960d8c"
+
 abab@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"
@@ -8704,7 +8708,7 @@ transit-immutable-js@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/transit-immutable-js/-/transit-immutable-js-0.7.0.tgz#993e25089b6311ff402140f556276d6d253005d9"
 
-transit-js@^0.8.861:
+transit-js@^0.8.846:
   version "0.8.861"
   resolved "https://registry.yarnpkg.com/transit-js/-/transit-js-0.8.861.tgz#829e516b80349a41fff5d59f5e6993b5473f72c9"
 

@@ -4,11 +4,11 @@ export const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state') //eslint-disable-line
     if (serializedState === null) {
-      return null
+      return undefined
     }
     return fromJS(transit.fromJSON(serializedState))
   } catch (err) {
-    return null
+    return undefined
   }
 }
 

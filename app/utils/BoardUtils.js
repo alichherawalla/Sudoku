@@ -101,7 +101,6 @@ export function getFinishedBoard (board) {
       finished[i][j] = {value: board[i][j].value, type: TYPE_GENERATED}
     }
   }
-  console.log(finished)
   return finished
 }
 

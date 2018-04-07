@@ -144,6 +144,7 @@
     "testRegex": "tests/.*\\.test\\.js$"
   },
   "dependencies": {
+    "JSON": "^1.0.0",
     "antd": "^3.4.0",
     "babel-plugin-dynamic-import-node": "1.0.2",
     "babel-plugin-import": "^1.6.5",
@@ -186,7 +187,7 @@
     "sanitize.css": "4.1.0",
     "styled-components": "2.0.0",
     "transit-immutable-js": "^0.7.0",
-    "transit-js": "^0.8.861",
+    "transit-js": "^0.8.846",
     "warning": "3.0.0",
     "whatwg-fetch": "2.0.3"
   },

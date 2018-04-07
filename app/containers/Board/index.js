@@ -36,7 +36,7 @@ import {
   isValidMove,
   isGameOver
 } from '../../utils/BoardUtils'
-import { resetBoard, updateBoard, requestNewGame, updateCleanBoard } from './actions'
+import { dontShowIntroToast, resetBoard, updateBoard, requestNewGame, updateCleanBoard } from './actions'
 import { KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN } from '../../utils/constants'
 import Button from '../../components/CustomButton'
 
@@ -62,9 +62,6 @@ color: rgba(0, 0, 0, 0.65)
 `
 let clickedBoardItem
 export class Board extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  state = {
-    showIntroToast: true
-  }
   componentDidMount () {
     window.addEventListener('keydown', this.handleKeyPress)
   }
@@ -126,7 +123,6 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
     this.props.resetBoard()
   }
   handleKeyPress = (evt) => {
-    console.log(evt)
     let boardArray = this.props.game.board.map((boardRow) => boardRow.slice().map((element) => element.value ? element.value : 0))
     let board = this.props.game.board.map((boardRow) => boardRow.slice())
     if (clickedBoardItem && evt.keyCode >= 49 && evt.keyCode <= 57) {
@@ -189,27 +185,30 @@ export class Board extends React.Component { // eslint-disable-line react/prefer
   }
 
   showErrorToast (errorMessage) {
+    toast.dismiss()
     toast.error(errorMessage, {
       position: toast.POSITION.TOP_RIGHT
     })
   }
 
   showSuccessToast (successMessage) {
+    toast.dismiss()
     toast.success(successMessage, {
       position: toast.POSITION.TOP_CENTER
     })
   }
   showInfoToast (infoMessage) {
+    toast.dismiss()
     toast.info(infoMessage, {
       position: toast.POSITION.TOP_CENTER
     })
   }
 
   updateShowIntroState = () => {
-    this.setState({showIntroToast: !this.state.showIntroToast})
+    this.props.dontShowIntroToast()
   }
   render () {
-    if (this.state.showIntroToast) {
+    if (this.props.game.showIntroToast) {
       this.showInfoToast('Click a board element and enter a number to begin playing')
       this.updateShowIntroState()
     }
@@ -294,6 +293,9 @@ function mapDispatchToProps (dispatch, ownProps) {
     },
     resetBoard: () => {
       dispatch(resetBoard())
+    },
+    dontShowIntroToast: () => {
+      dispatch(dontShowIntroToast())
     },
     dispatch
   }
