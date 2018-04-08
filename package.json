@@ -1,16 +1,16 @@
 {
-  "name": "react-boilerplate",
-  "version": "3.5.0",
-  "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
+  "name": "Sudoku",
+  "version": "1.0.0",
+  "description": "React JS implementation of Sudoku",
   "repository": {
     "type": "git",
-    "url": "git://github.com/react-boilerplate/react-boilerplate.git"
+    "url": "https://github.com/alichherawalla/Sudoku.git"
   },
   "engines": {
     "npm": ">=3",
     "node": ">=5"
   },
-  "author": "Max Stoiber",
+  "author": "Mohammed Ali Chherawalla",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
@@ -193,7 +193,7 @@
   },
   "devDependencies": {
     "add-asset-html-webpack-plugin": "2.0.1",
-    "babel-cli": "6.24.1",
+    "babel-cli": "^6.26.0",
     "babel-core": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-loader": "7.1.0",
@@ -205,9 +205,9 @@
     "babel-plugin-transform-react-constant-elements": "6.23.0",
     "babel-plugin-transform-react-inline-elements": "6.22.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.5",
-    "babel-preset-env": "1.5.1",
-    "babel-preset-react": "6.24.1",
-    "babel-preset-stage-0": "6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "circular-dependency-plugin": "3.0.0",
     "coveralls": "2.13.1",
     "css-loader": "0.28.4",
