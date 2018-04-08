@@ -24,7 +24,7 @@ const AppWrapper = styled.div`
   padding: 0 16px;
 `
 
-export default function App () {
+export default function Sudoku () {
   return (
     <AppWrapper>
       <Helmet
